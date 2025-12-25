@@ -8,33 +8,172 @@
       margin: 0;
       padding: 0;
       font-family: "Georgia", serif;
-      background: linear-gradient(135deg, #f8cdda, #f5a6c8, #fbc2eb);
+      background: radial-gradient(circle at top, #fde2ea 0%, #f7b7c9 40%, #f3a0b8 100%);
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      overflow-x: hidden;
-      color: #3b2b2b;
-    }/* Floating flowers */
-.flower {
+      overflow-y: auto;
+      color: #3a2a2a;
+    }/* Falling petals (more realistic motion) */
+.petal {
   position: fixed;
-  font-size: 28px;
-  opacity: 0.6;
-  animation: float 18s linear infinite;
+  top: -10vh;
+  width: 14px;
+  height: 10px;
+  background: linear-gradient(135deg, #ffd1dc, #f4a7bb);
+  border-radius: 70% 30% 70% 30%;
+  opacity: 0.8;
+  animation: fall linear infinite;
   pointer-events: none;
 }
 
-.flower:nth-child(1) { left: 10%; animation-duration: 20s; }
-.flower:nth-child(2) { left: 30%; animation-duration: 24s; }
-.flower:nth-child(3) { left: 50%; animation-duration: 18s; }
-.flower:nth-child(4) { left: 70%; animation-duration: 22s; }
-.flower:nth-child(5) { left: 90%; animation-duration: 26s; }
+.petal:nth-child(1) { left: 10%; animation-duration: 18s; }
+.petal:nth-child(2) { left: 25%; animation-duration: 22s; }
+.petal:nth-child(3) { left: 40%; animation-duration: 20s; }
+.petal:nth-child(4) { left: 55%; animation-duration: 24s; }
+.petal:nth-child(5) { left: 70%; animation-duration: 19s; }
+.petal:nth-child(6) { left: 85%; animation-duration: 26s; }
 
-@keyframes float {
-  from { transform: translateY(110vh) rotate(0deg); }
-  to { transform: translateY(-10vh) rotate(360deg); }
+@keyframes fall {
+  0% { transform: translateY(-10vh) rotate(0deg) translateX(0); }
+  50% { transform: translateY(50vh) rotate(180deg) translateX(30px); }
+  100% { transform: translateY(110vh) rotate(360deg) translateX(-20px); }
 }
 
+.container {
+  text-align: center;
+  z-index: 2;
+}
+
+/* Envelope – paper-like */
+.envelope {
+  width: 280px;
+  height: 190px;
+  background: linear-gradient(180deg, #fff6f8, #fbe6ec);
+  position: relative;
+  margin: 0 auto;
+  cursor: pointer;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.25);
+  border-radius: 6px;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.envelope:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 55px rgba(0,0,0,0.3);
+}
+
+.envelope::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 50%, #f2c9d6 50%);
+  clip-path: polygon(0 0, 100% 0, 50% 58%);
+  border-radius: 6px;
+}
+
+.seal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 42px;
+  height: 42px;
+  background: radial-gradient(circle, #c94b6a, #a83752);
+  border-radius: 50%;
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+.seal::after {
+  content: "✿";
+  color: #fff;
+  font-size: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.label {
+  margin-top: 18px;
+  color: #ffffff;
+  font-size: 1.05rem;
+  letter-spacing: 1px;
+}
+
+/* Letter */
+.letter {
+  display: none;
+  max-width: 760px;
+  background: #fffefe;
+  padding: 48px;
+  margin: 20px;
+  box-shadow: 0 30px 65px rgba(0,0,0,0.35);
+  border-radius: 14px;
+  text-align: left;
+  animation: reveal 1.4s ease forwards;
+  z-index: 2;
+}
+
+.letter h2 {
+  margin-top: 0;
+  font-weight: normal;
+}
+
+.letter p {
+  line-height: 1.9;
+  margin-bottom: 20px;
+}
+
+.signature {
+  margin-top: 36px;
+  font-style: italic;
+}
+
+@keyframes reveal {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+  </style>
+</head>
+<body>  <!-- Petals -->  <div class="petal"></div>
+  <div class="petal"></div>
+  <div class="petal"></div>
+  <div class="petal"></div>
+  <div class="petal"></div>
+  <div class="petal"></div>  <div class="container" id="gift">
+    <div class="envelope" onclick="openLetter()">
+      <div class="seal"></div>
+    </div>
+    <div class="label">Click to open</div>
+  </div>  <div class="letter" id="letter">
+    <h2>Dear Suz,</h2><p>From the very first moment I saw you—sitting on another chair to my left—something gentle stirred within me. I didn’t know your name, your voice, or your story, and I never imagined we would turn out to be classmates. You were simply a quiet spark in a moment I didn’t expect to remember, yet somehow I did.</p>
+
+<p>Fate moved in a way I still can’t fully explain. During the EDA grouping, you were absent, so I had no reason to expect that your name would ever cross my path. Many classmates asked to join my group, and I accepted them, wanting to help. I thought everything was already final when I submitted the list. But fate has a playful way of nudging us. Someone approached me and asked if I could add one more name—your name.</p>
+
+<p>I honestly wanted to decline because we already had so many members. But at that exact moment, something inside me whispered, <em>Don’t refuse. Add that one.</em> I didn’t know why. I didn’t even know you. But that feeling was strong and clear, as if destiny itself insisted.</p>
+
+<p>When I created the group chat and searched the name that was added, your face appeared. And in that instant, everything made sense. The quiet certainty I felt was right all along. You were the person destiny had tried to place in my path twice—first through a memory, then through a name.</p>
+
+<p>When we finally met, the connection deepened. You spoke with warmth and life, and I found myself listening more than talking. I avoided your eyes because the moment I looked at you, I knew I would smile—and I didn’t want you to notice how much your presence affected me. Then you mentioned you had a boyfriend, and though my heart quietly ached, I understood. Someone as gentle and radiant as you would naturally be cherished by someone.</p>
+
+<p>Still, you became a soft inspiration—an unspoken reason to keep going, to show up, to try. My feelings came without warning, and though I know they are not mine to hold on to, the heart loves where it feels safe, not where it is allowed.</p>
+
+<p>I am learning to let go slowly and gracefully. Time will do its quiet work. But for now, allow me this honesty: I care for you deeply, far more than I ever intended.</p>
+
+<p>Thank you, Suz, for brightening my days without ever trying. And if you ever need help with your studies, know that I am always here.</p>
+
+<div class="signature">With sincerity,<br/>AJ</div>
+
+  </div>  <script>
+    function openLetter() {
+      document.getElementById('gift').style.display = 'none';
+      document.getElementById('letter').style.display = 'block';
+    }
+  </script></body>
+</html>
 .container {
   text-align: center;
   z-index: 2;
